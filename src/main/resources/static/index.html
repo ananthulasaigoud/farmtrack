@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - FarmTrack</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-box">
+      <span class="brand">🌱 FarmTrack</span>
+
+      <div class="card">
+        <h1>Login</h1>
+        <p class="subtitle">Use your phone number or email</p>
+
+        <div id="message" class="message" hidden></div>
+
+        <form id="loginForm">
+          <div class="field">
+            <label for="identifier">Phone number or email</label>
+            <input id="identifier" required>
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" type="password" required>
+          </div>
+          <button type="submit" class="btn" id="loginBtn">Login</button>
+        </form>
+
+        <div class="auth-links">
+          <a href="forgot-password.html">Forgot password?</a>
+        </div>
+
+        <!-- Guest login: try the app with sample data, no registration needed -->
+        <div class="guest-box">
+          <b>Just want to try FarmTrack?</b>
+          <p class="small">Use the guest account with sample crops, expenses and sales.</p>
+          <div class="guest-credentials">
+            <span>Phone: <code>9999999999</code></span>
+            <span>Password: <code>guest123</code></span>
+          </div>
+          <button type="button" class="btn btn-light" id="guestLoginBtn">Login as Guest</button>
+        </div>
+      </div>
+
+      <div class="auth-links">
+        New user? <a href="register.html">Create an account</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

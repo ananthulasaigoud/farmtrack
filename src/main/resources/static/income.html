@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Income - FarmTrack</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="dashboard.html" class="brand">🌱 FarmTrack</a>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="crops.html">Crops</a>
+      <a href="expenses.html">Expenses</a>
+      <a href="income.html">Income</a>
+      <a href="reports.html">Reports</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+    <div class="user-box">
+      <span id="userName"></span>
+      <button id="logoutBtn" class="btn btn-light btn-small">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <div>
+        <h1>Income</h1>
+        <p class="subtitle">Record each crop sale: quantity, price per unit and total</p>
+      </div>
+      <button id="addSaleBtn" class="btn">+ Record sale</button>
+    </div>
+
+    <div id="message" class="message" hidden></div>
+
+    <!-- Add / edit form -->
+    <div class="card" id="formCard" hidden>
+      <h2 id="formTitle">Record sale</h2>
+      <div id="formMessage" class="message" hidden></div>
+
+      <form id="saleForm">
+        <div class="form-grid">
+          <div>
+            <label for="cropId">Crop sold *</label>
+            <select id="cropId" required></select>
+          </div>
+          <div>
+            <label for="saleDate">Sale date *</label>
+            <input id="saleDate" type="date" required>
+          </div>
+          <div>
+            <label for="quantity">Quantity sold *</label>
+            <input id="quantity" type="number" min="0.01" step="0.01" required>
+          </div>
+          <div>
+            <label for="unit">Unit</label>
+            <select id="unit">
+              <option>quintal</option>
+              <option>kg</option>
+              <option>tonne</option>
+              <option>bag</option>
+            </select>
+          </div>
+          <div>
+            <label for="pricePerUnit">Price per unit (₹) *</label>
+            <input id="pricePerUnit" type="number" min="0.01" step="0.01" required>
+          </div>
+          <div>
+            <label for="description">Description</label>
+            <input id="description" maxlength="500" placeholder="e.g. Sold at market yard">
+          </div>
+          <div class="full total-box">Total sales amount: <span id="saleTotal">₹0.00</span></div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn">Save sale</button>
+          <button type="button" class="btn btn-light" id="cancelBtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- History -->
+    <div class="card">
+      <div class="card-header">
+        <h2>Sales history · <span class="profit" id="total">₹0.00</span></h2>
+        <div class="filters">
+          <select id="cropFilter"></select>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th><th>Crop</th><th>Quantity</th>
+              <th class="right">Price / unit</th><th class="right">Total</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="saleTable">
+            <tr><td colspan="6" class="empty">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/income.js"></script>
+</body>
+</html>

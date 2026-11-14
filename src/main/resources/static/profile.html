@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - FarmTrack</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="dashboard.html" class="brand">🌱 FarmTrack</a>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="crops.html">Crops</a>
+      <a href="expenses.html">Expenses</a>
+      <a href="income.html">Income</a>
+      <a href="reports.html">Reports</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+    <div class="user-box">
+      <span id="userName"></span>
+      <button id="logoutBtn" class="btn btn-light btn-small">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Profile</h1>
+    <p class="subtitle">Your details and password</p>
+
+    <div id="guestNotice" class="message success" hidden>
+      You are using the shared <b>guest account</b>. You can add and change crops, expenses and sales,
+      but the account's details and password can't be changed. <a href="register.html">Register your own free account</a>
+      to keep your own data.
+    </div>
+
+    <div class="grid-2">
+      <!-- Farmer details -->
+      <div class="card">
+        <h2>My details</h2>
+        <div id="profileMessage" class="message" hidden></div>
+        <form id="profileForm">
+          <div class="form-grid">
+            <div class="full">
+              <label for="name">Name *</label>
+              <input id="name" required maxlength="100">
+            </div>
+            <div>
+              <label for="phone">Phone (used to log in) *</label>
+              <input id="phone" required maxlength="10" pattern="[0-9]{10}">
+            </div>
+            <div>
+              <label for="village">Village *</label>
+              <input id="village" required maxlength="100">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn">Save changes</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Password -->
+      <div class="card">
+        <h2>Change password</h2>
+        <div id="passwordMessage" class="message" hidden></div>
+        <form id="passwordForm">
+          <label for="currentPassword">Current password</label>
+          <input id="currentPassword" type="password" required>
+          <br><br>
+          <label for="newPassword">New password (min 6 characters)</label>
+          <input id="newPassword" type="password" required minlength="6">
+          <div class="form-actions">
+            <button type="submit" class="btn">Update password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="loss">Delete account</h2>
+      <p class="small">Deletes your account and all your crops, expenses and sales. This cannot be undone.</p>
+      <button id="deleteAccountBtn" class="btn btn-danger">Delete my account</button>
+    </div>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

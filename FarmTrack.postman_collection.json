@@ -1,0 +1,241 @@
+{
+  "info": {
+    "name": "FarmTrack API",
+    "description": "Run these in order, top to bottom. Login and Register save the token automatically, and 'Add crop' / 'Add expense' / 'Record sale' save their ids, so the next requests just work.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080/api" },
+    { "key": "token", "value": "" },
+    { "key": "farmerId", "value": "" },
+    { "key": "cropId", "value": "" },
+    { "key": "expenseId", "value": "" },
+    { "key": "incomeId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1. Auth",
+      "item": [
+        {
+          "name": "Register",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "const body = pm.response.json();",
+            "if (body.token) {",
+            "  pm.collectionVariables.set('token', body.token);",
+            "  pm.collectionVariables.set('farmerId', body.user.farmerId);",
+            "}"
+          ] } }],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/register",
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Sai\",\n  \"phone\": \"9000000001\",\n  \"village\": \"Warangal\",\n  \"email\": \"sai@example.com\",\n  \"password\": \"test1234\"\n}" }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "const body = pm.response.json();",
+            "if (body.token) {",
+            "  pm.collectionVariables.set('token', body.token);",
+            "  pm.collectionVariables.set('farmerId', body.user.farmerId);",
+            "}"
+          ] } }],
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/login",
+            "body": { "mode": "raw", "raw": "{\n  \"identifier\": \"9000000001\",\n  \"password\": \"test1234\"\n}" }
+          }
+        },
+        {
+          "name": "Me (who am I?)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/auth/me" }
+        },
+        {
+          "name": "Forgot password",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/forgot-password",
+            "body": { "mode": "raw", "raw": "{\n  \"identifier\": \"9000000001\"\n}" }
+          }
+        },
+        {
+          "name": "Reset password (paste resetToken from Forgot password)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/reset-password",
+            "body": { "mode": "raw", "raw": "{\n  \"token\": \"PASTE_TOKEN_HERE\",\n  \"newPassword\": \"test1234\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Farmer",
+      "item": [
+        { "name": "Get my farmer record", "request": { "method": "GET", "url": "{{baseUrl}}/farmers/{{farmerId}}" } },
+        {
+          "name": "Update my farmer record",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/farmers/{{farmerId}}",
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Sai Kumar\",\n  \"phone\": \"9000000001\",\n  \"village\": \"Warangal\"\n}" }
+          }
+        },
+        { "name": "Get all farmers (admin only -> 403 for farmers)", "request": { "method": "GET", "url": "{{baseUrl}}/farmers" } }
+      ]
+    },
+    {
+      "name": "3. Crop",
+      "item": [
+        {
+          "name": "Add crop",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "if (pm.response.code === 201) pm.collectionVariables.set('cropId', pm.response.json().id);"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/farmers/{{farmerId}}/crops",
+            "body": { "mode": "raw", "raw": "{\n  \"cropName\": \"Rice\",\n  \"landDetails\": \"2 acres near canal\",\n  \"season\": \"Kharif\",\n  \"sowingDate\": \"2026-06-15\",\n  \"expectedHarvestDate\": \"2026-10-30\",\n  \"additionalNotes\": \"BPT 5204 variety\"\n}" }
+          }
+        },
+        {
+          "name": "Add crop - INVALID (see the 400 error)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/farmers/{{farmerId}}/crops",
+            "body": { "mode": "raw", "raw": "{\n  \"cropName\": \"\",\n  \"sowingDate\": \"2026-07-01\",\n  \"expectedHarvestDate\": \"2026-06-01\"\n}" }
+          }
+        },
+        { "name": "Get my crops", "request": { "method": "GET", "url": "{{baseUrl}}/farmers/{{farmerId}}/crops" } },
+        { "name": "Get crop by id", "request": { "method": "GET", "url": "{{baseUrl}}/crops/{{cropId}}" } },
+        {
+          "name": "Update crop",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/crops/{{cropId}}",
+            "body": { "mode": "raw", "raw": "{\n  \"cropName\": \"Rice\",\n  \"landDetails\": \"2.5 acres near canal\",\n  \"season\": \"Kharif\",\n  \"sowingDate\": \"2026-06-15\",\n  \"expectedHarvestDate\": \"2026-11-05\"\n}" }
+          }
+        },
+        { "name": "Delete crop (run last!)", "request": { "method": "DELETE", "url": "{{baseUrl}}/crops/{{cropId}}" } }
+      ]
+    },
+    {
+      "name": "4. Expense",
+      "item": [
+        {
+          "name": "Add expense - seeds",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "if (pm.response.code === 201) pm.collectionVariables.set('expenseId', pm.response.json().id);"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/crops/{{cropId}}/expenses",
+            "body": { "mode": "raw", "raw": "{\n  \"category\": \"SEEDS\",\n  \"amount\": 2000,\n  \"expenseDate\": \"2026-06-10\",\n  \"description\": \"Paddy seed\"\n}" }
+          }
+        },
+        {
+          "name": "Add expense - fertilizer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/crops/{{cropId}}/expenses",
+            "body": { "mode": "raw", "raw": "{\n  \"category\": \"FERTILIZER\",\n  \"amount\": 3000,\n  \"expenseDate\": \"2026-07-05\"\n}" }
+          }
+        },
+        {
+          "name": "Add expense - labour",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/crops/{{cropId}}/expenses",
+            "body": { "mode": "raw", "raw": "{\n  \"category\": \"LABOUR\",\n  \"amount\": 5000,\n  \"expenseDate\": \"2026-08-01\"\n}" }
+          }
+        },
+        {
+          "name": "Add expense - pesticide",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/crops/{{cropId}}/expenses",
+            "body": { "mode": "raw", "raw": "{\n  \"category\": \"PESTICIDE\",\n  \"amount\": 1500,\n  \"expenseDate\": \"2026-08-20\"\n}" }
+          }
+        },
+        { "name": "Get crop expenses", "request": { "method": "GET", "url": "{{baseUrl}}/crops/{{cropId}}/expenses" } },
+        { "name": "Expense history (all crops, only SEEDS)", "request": { "method": "GET", "url": "{{baseUrl}}/expenses?category=SEEDS" } },
+        {
+          "name": "Update expense",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/expenses/{{expenseId}}",
+            "body": { "mode": "raw", "raw": "{\n  \"category\": \"SEEDS\",\n  \"amount\": 2200,\n  \"expenseDate\": \"2026-06-10\",\n  \"description\": \"Paddy seed + transport\"\n}" }
+          }
+        },
+        { "name": "Delete expense", "request": { "method": "DELETE", "url": "{{baseUrl}}/expenses/{{expenseId}}" } }
+      ]
+    },
+    {
+      "name": "5. Income",
+      "item": [
+        {
+          "name": "Record sale (20 quintal x 2000)",
+          "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+            "if (pm.response.code === 201) pm.collectionVariables.set('incomeId', pm.response.json().id);"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/crops/{{cropId}}/incomes",
+            "body": { "mode": "raw", "raw": "{\n  \"quantity\": 20,\n  \"unit\": \"quintal\",\n  \"pricePerUnit\": 2000,\n  \"saleDate\": \"2026-11-05\",\n  \"description\": \"Sold at market yard\"\n}" }
+          }
+        },
+        { "name": "Get crop sales", "request": { "method": "GET", "url": "{{baseUrl}}/crops/{{cropId}}/incomes" } },
+        { "name": "Sales history (all crops)", "request": { "method": "GET", "url": "{{baseUrl}}/incomes" } },
+        { "name": "Delete sale", "request": { "method": "DELETE", "url": "{{baseUrl}}/incomes/{{incomeId}}" } }
+      ]
+    },
+    {
+      "name": "6. Dashboard & Reports",
+      "item": [
+        { "name": "Dashboard summary", "request": { "method": "GET", "url": "{{baseUrl}}/dashboard/summary" } },
+        { "name": "Crop summary", "request": { "method": "GET", "url": "{{baseUrl}}/dashboard/crops/{{cropId}}" } },
+        { "name": "Monthly summary 2026", "request": { "method": "GET", "url": "{{baseUrl}}/dashboard/monthly?year=2026" } },
+        { "name": "Report - crop-wise profit", "request": { "method": "GET", "url": "{{baseUrl}}/reports/crops" } },
+        { "name": "Report - best crop", "request": { "method": "GET", "url": "{{baseUrl}}/reports/best-crop" } },
+        { "name": "Download CSV - crops", "request": { "method": "GET", "url": "{{baseUrl}}/reports/download?type=crops" } }
+      ]
+    },
+    {
+      "name": "7. Security checks",
+      "item": [
+        { "name": "No token -> 401", "request": { "auth": { "type": "noauth" }, "method": "GET", "url": "{{baseUrl}}/dashboard/summary" } },
+        {
+          "name": "Wrong password -> 401",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/login",
+            "body": { "mode": "raw", "raw": "{\n  \"identifier\": \"9000000001\",\n  \"password\": \"wrong\"\n}" }
+          }
+        }
+      ]
+    }
+  ]
+}

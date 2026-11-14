@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - FarmTrack</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-box">
+      <span class="brand">🌱 FarmTrack</span>
+
+      <div class="card">
+        <h1>Create account</h1>
+        <p class="subtitle">Start tracking your farm income and expenses</p>
+
+        <div id="message" class="message" hidden></div>
+
+        <form id="registerForm">
+          <div class="field">
+            <label for="name">Full name *</label>
+            <input id="name" required maxlength="100">
+          </div>
+          <div class="field">
+            <label for="phone">Phone number *</label>
+            <input id="phone" required maxlength="10" pattern="[0-9]{10}" placeholder="10 digit mobile number">
+          </div>
+          <div class="field">
+            <label for="village">Village *</label>
+            <input id="village" required maxlength="100">
+          </div>
+          <div class="field">
+            <label for="email">Email (optional)</label>
+            <input id="email" type="email">
+          </div>
+          <div class="field">
+            <label for="password">Password * (min 6 characters)</label>
+            <input id="password" type="password" required minlength="6">
+          </div>
+          <div class="field">
+            <label for="confirmPassword">Confirm password *</label>
+            <input id="confirmPassword" type="password" required>
+          </div>
+          <button type="submit" class="btn" id="registerBtn">Register</button>
+        </form>
+      </div>
+
+      <div class="auth-links">
+        Already registered? <a href="index.html">Login</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/common.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>

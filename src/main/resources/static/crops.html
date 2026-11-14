@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crops - FarmTrack</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="dashboard.html" class="brand">🌱 FarmTrack</a>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="crops.html">Crops</a>
+      <a href="expenses.html">Expenses</a>
+      <a href="income.html">Income</a>
+      <a href="reports.html">Reports</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+    <div class="user-box">
+      <span id="userName"></span>
+      <button id="logoutBtn" class="btn btn-light btn-small">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <div>
+        <h1>Crops</h1>
+        <p class="subtitle">Every crop you grow, with what it cost and what it earned</p>
+      </div>
+      <button id="addCropBtn" class="btn">+ Add crop</button>
+    </div>
+
+    <div id="message" class="message" hidden></div>
+
+    <!-- Add / edit form (hidden until "Add crop" or "Edit" is clicked) -->
+    <div class="card" id="formCard" hidden>
+      <h2 id="formTitle">Add crop</h2>
+      <div id="formMessage" class="message" hidden></div>
+
+      <form id="cropForm">
+        <div class="form-grid">
+          <div>
+            <label for="cropName">Crop name *</label>
+            <input id="cropName" required maxlength="100" placeholder="Rice, Cotton, Maize...">
+          </div>
+          <div>
+            <label for="season">Season</label>
+            <select id="season">
+              <option value="">-</option>
+              <option>Kharif</option>
+              <option>Rabi</option>
+              <option>Zaid</option>
+              <option>Year-round</option>
+            </select>
+          </div>
+          <div class="full">
+            <label for="landDetails">Land details</label>
+            <input id="landDetails" maxlength="255" placeholder="e.g. 2 acres near canal">
+          </div>
+          <div>
+            <label for="sowingDate">Sowing date</label>
+            <input id="sowingDate" type="date">
+          </div>
+          <div>
+            <label for="expectedHarvestDate">Expected harvest date</label>
+            <input id="expectedHarvestDate" type="date">
+          </div>
+          <div class="full">
+            <label for="additionalNotes">Notes</label>
+            <textarea id="additionalNotes" rows="2" maxlength="1000"></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn">Save crop</button>
+          <button type="button" class="btn btn-light" id="cancelBtn">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Crop list -->
+    <div class="card">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Crop</th>
+              <th>Season</th>
+              <th>Sowing</th>
+              <th>Harvest</th>
+              <th class="right">Expenses</th>
+              <th class="right">Income</th>
+              <th class="right">Profit / loss</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="cropTable">
+            <tr><td colspan="8" class="empty">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/crops.js"></script>
+</body>
+</html>

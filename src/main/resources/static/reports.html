@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reports - FarmTrack</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="dashboard.html" class="brand">🌱 FarmTrack</a>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="crops.html">Crops</a>
+      <a href="expenses.html">Expenses</a>
+      <a href="income.html">Income</a>
+      <a href="reports.html">Reports</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+    <div class="user-box">
+      <span id="userName"></span>
+      <button id="logoutBtn" class="btn btn-light btn-small">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Reports</h1>
+    <p class="subtitle">Crop-wise profit, monthly cash flow and downloadable reports</p>
+
+    <div id="message" class="message" hidden></div>
+
+    <div class="grid-2">
+      <!-- Downloads -->
+      <div class="card">
+        <h2>Download reports (CSV, opens in Excel)</h2>
+        <div class="filters">
+          <button class="btn btn-light" onclick="download('crops')">Crop-wise profit &amp; loss</button>
+          <button class="btn btn-light" onclick="download('monthly')">Monthly report</button>
+          <button class="btn btn-light" onclick="download('expenses')">All expenses</button>
+          <button class="btn btn-light" onclick="download('incomes')">All sales</button>
+        </div>
+      </div>
+
+      <!-- Best crop -->
+      <div class="card best-crop">
+        <h2>Best-performing crop</h2>
+        <div id="bestCrop"></div>
+      </div>
+    </div>
+
+    <!-- Crop-wise profit and loss -->
+    <div class="card">
+      <h2>Crop-wise profit &amp; loss</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Crop</th><th>Season</th><th class="right">Expenses</th>
+              <th class="right">Income</th><th class="right">Profit / loss</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="cropTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Monthly -->
+    <div class="card">
+      <div class="card-header">
+        <h2>Monthly income &amp; expenses</h2>
+        <select id="year"></select>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Month</th><th class="right">Income</th><th class="right">Expenses</th><th class="right">Profit / loss</th></tr>
+          </thead>
+          <tbody id="monthTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/reports.js"></script>
+</body>
+</html>

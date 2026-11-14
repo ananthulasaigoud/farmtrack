@@ -1,0 +1,524 @@
+/* =====================================================================
+   style.css - one stylesheet for all FarmTrack pages
+   ===================================================================== */
+
+:root {
+  --green: #2e7d32;
+  --green-dark: #1b5e20;
+  --green-light: #e8f5e9;
+  --red: #c62828;
+  --red-light: #ffebee;
+  --text: #263238;
+  --muted: #78909c;
+  --border: #e0e6dd;
+  --background: #f5f7f4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  font-size: 15px;
+}
+
+a {
+  color: var(--green);
+}
+
+h1 {
+  font-size: 24px;
+  margin: 0 0 4px;
+}
+
+h2 {
+  font-size: 17px;
+  margin: 0 0 14px;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  background: var(--green);
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+  padding: 10px 24px;
+}
+
+.brand {
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: none;
+}
+
+.topbar nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1;
+}
+
+.topbar nav a {
+  color: white;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+.topbar nav a:hover,
+.topbar nav a.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.user-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ---------- Page layout ---------- */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.card-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.card-header h2 {
+  margin: 0;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+/* ---------- Summary numbers ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.stat {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.stat-value {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+.profit {
+  color: var(--green);
+}
+
+.loss {
+  color: var(--red);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  border: none;
+  border-radius: 6px;
+  padding: 9px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  background: var(--green);
+  color: white;
+}
+
+.btn:hover {
+  background: var(--green-dark);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-light {
+  background: white;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-light:hover {
+  background: #f0f0f0;
+}
+
+.btn-danger {
+  background: var(--red);
+}
+
+.btn-danger:hover {
+  background: #8e0000;
+}
+
+.btn-small {
+  padding: 5px 10px;
+  font-size: 13px;
+}
+
+/* ---------- Forms ---------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.form-grid .full {
+  grid-column: 1 / -1;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #c9d2c5;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  background: white;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #a5d6a7;
+  border-color: var(--green);
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filters select,
+.card-header select {
+  width: auto;
+}
+
+.total-box {
+  background: var(--green-light);
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+/* ---------- Messages ---------- */
+.message {
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+
+.message.error {
+  background: var(--red-light);
+  color: var(--red);
+}
+
+.message.success {
+  background: var(--green-light);
+  color: var(--green-dark);
+}
+
+/* ---------- Tables ---------- */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+th {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: #fafbf9;
+}
+
+.right {
+  text-align: right;
+}
+
+.small {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 24px;
+}
+
+.actions {
+  white-space: nowrap;
+}
+
+/* ---------- Charts made with plain divs ---------- */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 220px;
+  padding-top: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.bar-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.bars {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2px;
+}
+
+.bar {
+  width: 40%;
+  max-width: 18px;
+  border-radius: 3px 3px 0 0;
+}
+
+.bar.income {
+  background: #43a047;
+}
+
+.bar.expense {
+  background: #e57373;
+}
+
+.bar-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.legend {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.legend span::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 5px;
+}
+
+.legend .income::before {
+  background: #43a047;
+}
+
+.legend .expense::before {
+  background: #e57373;
+}
+
+/* horizontal bars (expenses by category) */
+.hbar-row {
+  margin-bottom: 10px;
+}
+
+.hbar-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 3px;
+}
+
+.hbar-track {
+  background: #eef1ec;
+  border-radius: 4px;
+  height: 8px;
+}
+
+.hbar-fill {
+  background: var(--green);
+  height: 8px;
+  border-radius: 4px;
+}
+
+.best-crop {
+  text-align: center;
+}
+
+.best-crop .trophy {
+  font-size: 40px;
+}
+
+/* ---------- Login / register pages ---------- */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #e8f5e9, #fffde7);
+}
+
+.auth-box {
+  width: 100%;
+  max-width: 420px;
+}
+
+.auth-box .brand {
+  display: block;
+  text-align: center;
+  color: var(--green);
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.auth-box .field {
+  margin-bottom: 14px;
+}
+
+.auth-box .btn {
+  width: 100%;
+  padding: 11px;
+}
+
+.auth-links {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 14px;
+}
+
+/* Guest login box on the login page */
+.guest-box {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px dashed #a5d6a7;
+  border-radius: 8px;
+  background: var(--green-light);
+  text-align: center;
+}
+
+.guest-box p {
+  margin: 4px 0 10px;
+}
+
+.guest-credentials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 16px;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.guest-credentials code {
+  background: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 20px;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 800px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-2,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    padding: 10px 16px;
+  }
+}

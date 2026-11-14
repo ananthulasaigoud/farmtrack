@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop details - FarmTrack</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="dashboard.html" class="brand">🌱 FarmTrack</a>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="crops.html">Crops</a>
+      <a href="expenses.html">Expenses</a>
+      <a href="income.html">Income</a>
+      <a href="reports.html">Reports</a>
+      <a href="profile.html">Profile</a>
+    </nav>
+    <div class="user-box">
+      <span id="userName"></span>
+      <button id="logoutBtn" class="btn btn-light btn-small">Logout</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <p><a href="crops.html">&larr; Back to crops</a></p>
+
+    <div class="page-header">
+      <div>
+        <h1 id="cropName">Loading...</h1>
+        <p class="subtitle" id="cropSubtitle"></p>
+      </div>
+      <div class="form-actions" style="margin-top:0">
+        <button id="editCropBtn" class="btn btn-light">Edit crop</button>
+        <button id="deleteCropBtn" class="btn btn-danger">Delete crop</button>
+      </div>
+    </div>
+
+    <div id="message" class="message" hidden></div>
+
+    <!-- Profit summary for this crop -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">Total expenses</div>
+        <div class="stat-value loss" id="totalExpenses">-</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Total income</div>
+        <div class="stat-value" id="totalIncome">-</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label" id="profitLabel">Profit</div>
+        <div class="stat-value" id="profit">-</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Land</div>
+        <div id="landDetails">-</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- Expenses of this crop -->
+      <div class="card">
+        <div class="card-header">
+          <h2>Expenses</h2>
+          <button class="btn btn-small" id="showExpenseFormBtn">+ Add expense</button>
+        </div>
+
+        <form id="expenseForm" hidden>
+          <div id="expenseFormMessage" class="message" hidden></div>
+          <div class="form-grid">
+            <div>
+              <label for="category">Category *</label>
+              <select id="category">
+                <option value="SEEDS">Seeds</option>
+                <option value="FERTILIZER">Fertilizer</option>
+                <option value="LABOUR">Labour</option>
+                <option value="PESTICIDE">Pesticides</option>
+                <option value="IRRIGATION">Irrigation</option>
+                <option value="MACHINERY">Machinery</option>
+                <option value="TRANSPORT">Transport</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="amount">Amount (₹) *</label>
+              <input id="amount" type="number" min="0.01" step="0.01" required>
+            </div>
+            <div>
+              <label for="expenseDate">Date *</label>
+              <input id="expenseDate" type="date" required>
+            </div>
+            <div>
+              <label for="expenseDescription">Description</label>
+              <input id="expenseDescription" maxlength="500">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn">Save expense</button>
+            <button type="button" class="btn btn-light" onclick="document.getElementById('expenseForm').hidden = true">Cancel</button>
+          </div>
+          <hr>
+        </form>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>Date</th><th>Category</th><th>Description</th><th class="right">Amount</th><th></th></tr>
+            </thead>
+            <tbody id="expenseTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Expense breakdown -->
+      <div class="card">
+        <h2>Expense breakdown</h2>
+        <div id="categoryBars"></div>
+        <h2 style="margin-top:20px">Notes</h2>
+        <p class="small" id="notes">-</p>
+      </div>
+    </div>
+
+    <!-- Sales of this crop -->
+    <div class="card">
+      <div class="card-header">
+        <h2>Sales</h2>
+        <button class="btn btn-small" id="showSaleFormBtn">+ Record sale</button>
+      </div>
+
+      <form id="saleForm" hidden>
+        <div id="saleFormMessage" class="message" hidden></div>
+        <div class="form-grid">
+          <div>
+            <label for="quantity">Quantity sold *</label>
+            <input id="quantity" type="number" min="0.01" step="0.01" required>
+          </div>
+          <div>
+            <label for="unit">Unit</label>
+            <select id="unit">
+              <option>quintal</option>
+              <option>kg</option>
+              <option>tonne</option>
+              <option>bag</option>
+            </select>
+          </div>
+          <div>
+            <label for="pricePerUnit">Price per unit (₹) *</label>
+            <input id="pricePerUnit" type="number" min="0.01" step="0.01" required>
+          </div>
+          <div>
+            <label for="saleDate">Sale date *</label>
+            <input id="saleDate" type="date" required>
+          </div>
+          <div class="full">
+            <label for="saleDescription">Description</label>
+            <input id="saleDescription" maxlength="500">
+          </div>
+          <div class="full total-box">Total: <span id="saleTotal">₹0.00</span></div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn">Save sale</button>
+          <button type="button" class="btn btn-light" onclick="document.getElementById('saleForm').hidden = true">Cancel</button>
+        </div>
+        <hr>
+      </form>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Date</th><th>Quantity</th><th class="right">Price / unit</th><th class="right">Total</th><th>Description</th><th></th></tr>
+          </thead>
+          <tbody id="saleTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/common.js"></script>
+  <script src="js/crop-details.js"></script>
+</body>
+</html>
