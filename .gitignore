@@ -34,3 +34,6 @@ build/
 
 ### Personal study notes (keep out of GitHub) ###
 FarmTrack_Interview_Guide.pdf
+
+### Local secrets (never push) ###
+src/main/resources/application-local.properties

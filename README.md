@@ -59,8 +59,21 @@ Needs Java 21+ and MySQL running on `localhost:3306`.
 
 Open http://localhost:8080. The same app serves the web pages and the API (`/api/...`).
 The database `farmtrack_db` is created if it does not exist.
-Settings live in `src/main/resources/application.properties` and can be overridden with environment
-variables: `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`.
+
+### Settings
+
+| File | Pushed to GitHub? | Contains |
+|---|---|---|
+| `application.properties` | yes | shared settings; secrets read from environment variables |
+| `application-local.properties` | **no** (git-ignored) | your local MySQL password and a dev JWT secret |
+| `application-local.properties.example` | yes | template for the file above |
+
+**First time on a new laptop:** copy `application-local.properties.example` to `application-local.properties`
+(same folder) and fill in your MySQL password and a generated secret. The `local` profile is active by default,
+so this file is loaded automatically.
+
+**On a server (e.g. Railway):** set these environment variables: `JWT_SECRET`, `DB_URL`, `DB_USERNAME`,
+`DB_PASSWORD`, and `SPRING_PROFILES_ACTIVE=prod`. Optional: `GUEST_PASSWORD`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`.
 
 To test the API without the web pages, import `FarmTrack.postman_collection.json` into Postman.
 

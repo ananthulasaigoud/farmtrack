@@ -1,0 +1,12 @@
+# Copy this file to "application-local.properties" (same folder) and fill in your own values.
+# That file is git-ignored, so your password never goes to GitHub.
+
+# Your local MySQL root password
+spring.datasource.password=YOUR_MYSQL_PASSWORD
+
+# Any Base64 value of at least 32 bytes. Generate one in PowerShell:
+#   $b = New-Object byte[] 48; [Security.Cryptography.RNGCryptoServiceProvider]::Create().GetBytes($b); [Convert]::ToBase64String($b)
+app.jwt.secret=PASTE_A_GENERATED_SECRET_HERE
+
+app.auth.expose-reset-token=true
+app.guest.reset-on-startup=true
